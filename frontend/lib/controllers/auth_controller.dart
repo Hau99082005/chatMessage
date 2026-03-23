@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:frontend/global_variables.dart';
 import 'package:frontend/models/user.dart';
 import 'package:frontend/services/manage_http_response.dart';
@@ -32,4 +34,34 @@ class AuthController {
          print(e);
       }
   }
+
+  Future<void> Login({
+  required context,
+  required String email,
+  required String password
+}) async {
+   try {
+    http.Response response = await http.post(Uri.parse('${uri}/api/login'),
+    body: jsonEncode(
+      {
+      'email': email,
+      'password': password
+      },
+    ),
+    headers: <String, String> {
+      'Content-Type': 'application/json; charset=UTF-8',
+    }
+    );
+   manageHttpResponse(response: response, 
+   context: context, 
+   onSuccess: () {
+    showSnackbar(context, "Đăng nhập thành công!");
+   });
+   }catch(e) {
+    print(e);
+   }
 }
+}
+
+//login 
+

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:frontend/controllers/auth_controller.dart';
 import 'package:frontend/view/screens/authentication/register_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,6 +13,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen>{
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final AuthController _authController = AuthController();
+  late String email;
+  late String password;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -36,6 +40,9 @@ class _LoginScreenState extends State<LoginScreen>{
                   ),
                   const SizedBox(height: 15,),
                   TextFormField(
+                    onChanged: (value) {
+                      email = value;
+                    },
                     validator: (value) {
                       if(value!.isEmpty) {
                         return 'Vui lòng nhập vào email';
@@ -58,6 +65,9 @@ class _LoginScreenState extends State<LoginScreen>{
                   ),
                   const SizedBox(height: 12,),
                   TextFormField(
+                    onChanged: (value) {
+                      password = value;
+                    },
                     validator: (value) {
                       if(value!.isEmpty) {
                          return 'Vui lòng nhập vào mật khẩu';
@@ -100,11 +110,9 @@ class _LoginScreenState extends State<LoginScreen>{
                   const SizedBox(height: 15,),
                   //button login 
                   InkWell(
-                    onTap: () {
+                    onTap: () async {
                       if(_formKey.currentState!.validate()) {
-                         print('Đăng nhập thành công');
-                      }else {
-                        print("Đăng nhập thất bại!");
+                       await _authController.Login(context: context, email: email, password: password);
                       }
                     },
                     child: Container(
