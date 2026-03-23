@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:frontend/view/screens/authentication/register_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatelessWidget{
@@ -157,7 +158,9 @@ class LoginScreen extends StatelessWidget{
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => {},
+                      onTap: () => {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterScreen(),),),
+                      },
                       child: Text(
                         "Đăng Ký Ngay",
                         style: GoogleFonts.roboto( 

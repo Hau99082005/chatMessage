@@ -106,7 +106,9 @@ class RegisterScreen extends StatelessWidget{
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => {},
+                      onTap: () => {
+                        Navigator.pop(context),
+                      },
                       child: Text(
                         "Đăng Nhập",
                         style: GoogleFonts.roboto( 
