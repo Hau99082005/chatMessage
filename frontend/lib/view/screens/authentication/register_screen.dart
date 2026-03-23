@@ -31,7 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   Image.asset('assets/images/Logo.png'),
                   const SizedBox(height: 20),
-                  Text('Đăng ký tài khoản ChatApp',
+                  Text('Đăng ký tài khoản Chat Message',
                   style: GoogleFonts.roboto(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,

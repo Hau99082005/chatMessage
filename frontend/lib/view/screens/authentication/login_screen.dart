@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen>{
                 children: [
                   Image.asset('assets/images/Logo.png'),
                   const SizedBox(height: 20),
-                  Text('Chào mừng bạn đến với ChatApp',
+                  Text('Chào mừng bạn đến với Chat Message',
                   style: GoogleFonts.roboto(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
