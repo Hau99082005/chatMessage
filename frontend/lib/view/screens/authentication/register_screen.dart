@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/controllers/auth_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -10,6 +11,10 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final AuthController _authController = AuthController();
+  late String username;
+  late String email;
+  late String password;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +40,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   const SizedBox(height: 15,),
                   TextFormField(
+                    onChanged: (value) {
+                      username = value;
+                    },
                     validator: (value) {
                       if(value!.isEmpty) {
                         return 'Vui lòng nhập tên người dùng';
@@ -58,6 +66,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   const SizedBox(height: 12,),
                   TextFormField(
+                    onChanged: (value) {
+                       email = value;
+                    },
                     validator: (value) {
                       if(value!.isEmpty) {
                         return 'Vui lòng nhập email';
@@ -80,6 +91,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   const SizedBox(height: 12,),
                   TextFormField(
+                    onChanged: (value) {
+                      password = value;
+                    },
                     validator: (value) {
                       if(value!.isEmpty) {
                         return 'Vui lòng nhập mật khẩu';
@@ -104,11 +118,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 15,),
                   //button login 
                   InkWell(
-                    onTap: () {
+                    onTap: () async{
                       if(_formKey.currentState!.validate())  {
-                        print("Đăng ký thành công!");
-                      }else {
-                        print("Đăng ký thất bại!");
+                       await _authController.Register(context: context, 
+                       username: username, 
+                       email: email, 
+                       password: password);
                       }
                     },
                     child: Container(
