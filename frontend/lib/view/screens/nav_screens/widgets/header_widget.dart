@@ -57,7 +57,10 @@ class HeaderWidget extends StatelessWidget {
                   ),
                   child: IconButton(
                     padding: EdgeInsets.zero,
-                    icon: const Icon(Icons.edit_outlined, size: 20),
+                    constraints:
+                        const BoxConstraints(),
+                    splashRadius: 20, 
+                    icon: const Icon(Icons.edit_note_rounded, size: 20),
                     onPressed: () {},
                   ),
                 ),
