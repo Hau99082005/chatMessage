@@ -10,7 +10,10 @@ class HeaderWidget extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8.0,
+            ),
             child: Row(
               children: [
                 Positioned(
@@ -19,7 +22,8 @@ class HeaderWidget extends StatelessWidget {
                     backgroundImage: NetworkImage(
                       "https://images/pexels.com/photos/",
                     ),
-                  )),
+                  ),
+                ),
                 const SizedBox(width: 10),
                 Text(
                   'Chats',
@@ -61,6 +65,38 @@ class HeaderWidget extends StatelessWidget {
             ),
           ),
           const Divider(height: 4, thickness: 1, color: Color(0xFFE0E0E0)),
+          Positioned(
+            top: 8,
+            child: SizedBox(
+              width: double.infinity,
+              height: 80,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: 'Tìm kiếm',
+                    hintStyle: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey.shade600,
+                      fontStyle: FontStyle.normal,
+                      fontFamily: GoogleFonts.roboto().fontFamily,
+                    ),
+                    prefixIcon: const Icon(Icons.search, size: 25),
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 16,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Colors.grey.shade200,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
