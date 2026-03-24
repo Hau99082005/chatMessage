@@ -18,6 +18,7 @@ class AuthController {
         username: username,
         email: email, 
         password: password, 
+        token: '',
         avatar: '', 
         bio: '');
         http.Response response = await http.post(Uri.parse('${uri}/api/register'), 
@@ -62,6 +63,3 @@ class AuthController {
    }
 }
 }
-
-//login 
-
