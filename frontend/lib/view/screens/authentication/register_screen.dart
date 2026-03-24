@@ -16,6 +16,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late String email;
   late String password;
   bool isLoading = false;
+  bool _obscurePassword = true;
 
   registerUser() async {
      setState(() {
@@ -118,6 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return null;
                       }
                     },
+                    obscureText: _obscurePassword,
                     decoration: InputDecoration(
                       label: Text('Mật khẩu', style: GoogleFonts.roboto(
                         fontStyle: FontStyle.normal,
@@ -125,6 +127,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         fontWeight: FontWeight.w600,
                       ),
             
+                      ),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _obscurePassword = !_obscurePassword;
+                          });
+                        },
+                        icon: Icon(
+                          _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                          color: Colors.black54,
+                        ),
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10,),

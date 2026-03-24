@@ -125,11 +125,11 @@ const loginUser = async(req, res) => {
         const { email, password } = req.body;
         const findUser = await User.findOne({ email });
         if (!findUser) {
-            return res.status(400).json({ message: 'Invalid email or password!' });
+            return res.status(400).json({ message: 'email hoặc mật khẩu không đúng!' });
         } else {
             const isMatch = await bcrypt.compare(password, findUser.password);
             if (!isMatch) {
-                return res.status(400).json({ message: 'Incorrect password!' });
+                return res.status(400).json({ message: 'mật khẩu không chính xác!' });
             } else {
                 const token = jwt.sign({ id: findUser._id }, "passwordKey", { expiresIn: '1h' });
                 const { password, ...userWithoutPassword } = findUser._doc;
