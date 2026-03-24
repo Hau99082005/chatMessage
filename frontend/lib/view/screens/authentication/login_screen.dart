@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/controllers/auth_controller.dart';
+import 'package:frontend/services/manage_http_response.dart';
 import 'package:frontend/view/screens/authentication/register_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,6 +17,20 @@ class _LoginScreenState extends State<LoginScreen>{
   final AuthController _authController = AuthController();
   late String email;
   late String password;
+  bool isLoading = false;
+  loginUser() async {
+    setState(() {
+      isLoading = true;
+    });
+    await _authController.Login(context: context, email: email, password: password)
+    .whenComplete(() {
+      _formKey.currentState!.reset();
+      setState(() {
+        isLoading = false;
+      });
+    } 
+    );
+    }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -112,7 +127,9 @@ class _LoginScreenState extends State<LoginScreen>{
                   InkWell(
                     onTap: () async {
                       if(_formKey.currentState!.validate()) {
-                       await _authController.Login(context: context, email: email, password: password);
+                       loginUser();
+                      }else {
+                        showSnackbar(context, "Vui lòng điền đầy đủ thông tin!");
                       }
                     },
                     child: Container(
@@ -123,7 +140,9 @@ class _LoginScreenState extends State<LoginScreen>{
                         color: Colors.lightBlueAccent.shade400,
                       ),
                       child: Center(
-                        child: Text(
+                        child: isLoading ? CircularProgressIndicator(
+                          color: Colors.white,
+                        ) : Text(
                           'Đăng nhập',
                           style: GoogleFonts.roboto(
                             fontSize: 16,

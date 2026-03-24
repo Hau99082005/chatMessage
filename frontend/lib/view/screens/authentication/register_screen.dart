@@ -15,6 +15,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late String username;
   late String email;
   late String password;
+  bool isLoading = false;
+
+  registerUser() async {
+     setState(() {
+       isLoading = true;
+     });
+      await _authController.Register(context: context, 
+                       username: username, 
+                       email: email, 
+                       password: password)
+                      .whenComplete(() {
+                        _formKey.currentState!.reset();
+                        setState(() {
+                          isLoading = false;
+                        });
+                      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,12 +135,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 15,),
                   //button login 
                   InkWell(
-                    onTap: () async{
+                    onTap: () {
                       if(_formKey.currentState!.validate())  {
-                       await _authController.Register(context: context, 
-                       username: username, 
-                       email: email, 
-                       password: password);
+                         registerUser();
                       }
                     },
                     child: Container(
@@ -134,7 +148,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         color: Colors.lightBlueAccent.shade400,
                       ),
                       child: Center(
-                        child: Text(
+                        child: isLoading ? CircularProgressIndicator(color: Colors.white,) 
+                        : Text(
                           'Đăng Ký',
                           style: GoogleFonts.roboto(
                             fontSize: 16,
