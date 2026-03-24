@@ -14,14 +14,15 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _pageIndex = 0;
-  final List<Widget> _pages = [
-    ChatScreen(),
-    StoriesScreen(),
-    NotificationScreen(),
-    MenuScreen()
-  ];
+
   @override
   Widget build(BuildContext context) {
+    final pages = [
+      const ChatScreen(),
+      const StoriesScreen(),
+      const NotificationScreen(),
+      const MenuScreen(),
+    ];
     return Scaffold(
   bottomNavigationBar: Padding(
     padding: const EdgeInsets.all(8.0),
@@ -56,7 +57,7 @@ class _MainScreenState extends State<MainScreen> {
       ],
     ),
   ),
-  body: _pages[_pageIndex],
+  body: pages[_pageIndex],
 );
 
   }

@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/global_variables.dart';
 import 'package:frontend/models/user.dart';
+import 'package:frontend/providers/user_provider.dart';
 import 'package:frontend/services/manage_http_response.dart';
 import 'package:frontend/view/screens/authentication/login_screen.dart';
 import 'package:frontend/view/screens/main_screen.dart';
@@ -50,7 +52,8 @@ class AuthController {
   }
 
   Future<void> Login({
-    required context,
+    required BuildContext context,
+    required WidgetRef ref,
     required String email,
     required String password,
   }) async {
@@ -65,8 +68,11 @@ class AuthController {
       manageHttpResponse(
         response: response,
         context: context,
-        onSuccess: () {
-         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MainScreen()), (route) => false);
+        onSuccess: () async {
+          final data = jsonDecode(response.body);
+          final user = User.fromMap(data['user']);
+          await ref.read(userProvider.notifier).setUser(user);
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MainScreen()), (route) => false);
           showSnackbar(context, "Đăng nhập thành công!");
         },
       );

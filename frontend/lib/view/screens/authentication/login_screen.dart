@@ -1,36 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/controllers/auth_controller.dart';
 import 'package:frontend/services/manage_http_response.dart';
 import 'package:frontend/view/screens/authentication/register_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
    const LoginScreen({ super.key});
 
    @override
-   State<LoginScreen> createState() => _LoginScreenState();
+   ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen>{
+class _LoginScreenState extends ConsumerState<LoginScreen>{
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final AuthController _authController = AuthController();
   late String email;
   late String password;
   bool isLoading = false;
   loginUser() async {
-    setState(() {
-      isLoading = true;
-    });
-    await _authController.Login(context: context, email: email, password: password)
+    setState(() { isLoading = true; });
+    await _authController.Login(context: context, ref: ref, email: email, password: password)
     .whenComplete(() {
       _formKey.currentState!.reset();
-      setState(() {
-        isLoading = false;
-      });
-    } 
-    );
-    }
+      setState(() { isLoading = false; });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

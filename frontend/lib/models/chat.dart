@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class Chat {
   final String id;
-  final String participants;
+  final List<String> participants;
   final String lastMessage;
   final DateTime lastMessageAt;
   final String name;
@@ -19,12 +19,12 @@ class Chat {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      "id": id,
-      "participants": participants,
-      "lastMessage": lastMessage,
-      "lastMessageAt": lastMessageAt.millisecondsSinceEpoch,
-      "name": name,
-      "type": type,
+      '_id': id,
+      'participants': participants,
+      'lastMessage': lastMessage,
+      'lastMessageAt': lastMessageAt.toIso8601String(),
+      'name': name,
+      'type': type,
     };
   }
 
@@ -32,16 +32,17 @@ class Chat {
 
   factory Chat.fromMap(Map<String, dynamic> map) {
     return Chat(
-      id: map['_id'] as String? ?? "",
-      participants: map['participants'] as String? ?? "",
-      lastMessage: map['lastMessage'] as String? ?? "",
-      lastMessageAt: DateTime.fromMicrosecondsSinceEpoch(
-        (map['lastMessageAt']) as int? ?? 0,
-      ).toLocal(),
-      name: map['name'] as String? ?? "",
-      type: map['type'] as String? ?? "",
+      id: map['_id'] as String? ?? '',
+      participants: List<String>.from(map['participants'] ?? []),
+      lastMessage: map['lastMessage'] as String? ?? '',
+      lastMessageAt: map['lastMessageAt'] != null
+          ? DateTime.parse(map['lastMessageAt'].toString())
+          : DateTime.now(),
+      name: map['name'] as String? ?? '',
+      type: map['type'] as String? ?? 'private',
     );
   }
+
   factory Chat.fromJson(String source) =>
       Chat.fromMap(json.decode(source) as Map<String, dynamic>);
 }
