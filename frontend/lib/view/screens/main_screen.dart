@@ -1,22 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:frontend/view/screens/nav_screens/Chat_screen.dart';
+import 'package:frontend/view/screens/nav_screens/Menu_screen.dart';
+import 'package:frontend/view/screens/nav_screens/Notification_screen.dart';
+import 'package:frontend/view/screens/nav_screens/Stories_screen.dart';
 
-class MaiScreen extends StatefulWidget {
-  const MaiScreen({super.key});
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
 
   @override
-  State<MaiScreen> createState() => _MaiScreenState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MaiScreenState extends State<MaiScreen> {
+class _MainScreenState extends State<MainScreen> {
+  int _pageIndex = 0;
+  final List<Widget> _pages = [
+    ChatScreen(),
+    StoriesScreen(),
+    NotificationScreen(),
+    MenuScreen()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
   bottomNavigationBar: Padding(
     padding: const EdgeInsets.all(8.0),
     child: BottomNavigationBar(
-      selectedItemColor: Colors.black,       
-      unselectedItemColor: Colors.black54,   
+      selectedItemColor: Colors.blue.shade400,
+      unselectedItemColor: Colors.black54,
+      currentIndex: _pageIndex,
+      onTap: (value) {
+         setState(() {
+           _pageIndex = value;
+         });
+      },  
       type: BottomNavigationBarType.fixed, 
 
       items: [
@@ -39,6 +56,7 @@ class _MaiScreenState extends State<MaiScreen> {
       ],
     ),
   ),
+  body: _pages[_pageIndex],
 );
 
   }
