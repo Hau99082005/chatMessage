@@ -1,14 +1,14 @@
 const Chat = require('../models/Chat');
 
 const getUserChats = async(req, res) => {
-    const userId = req.user._id;
+    const userId = req.params.userId;
     if (!userId) {
         return res.status(400).json({ message: "User ID is required!" });
     }
     try {
         const chats = await Chat.find({ participants: userId });
         if (chats.length === 0) {
-            return res.status(404).json({ message: "No chats found for this user!" });
+            return res.status(200).json([]);
         } else {
             return res.status(200).json(chats);
         }
