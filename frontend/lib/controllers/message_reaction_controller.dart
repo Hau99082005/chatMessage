@@ -129,4 +129,120 @@ class MessageReactionController {
       return false;
     }
   }
+  Future<bool> updatedMessageReactionByReaction({ required BuildContext context, required String messageId, required String reaction}) async {
+    try {
+      final response = await http.put(Uri.parse('$uri/api/messagereactions/message/$messageId/reaction/$reaction'), headers: {
+        'Context-Type': 'application/json; charset=UTF-8',
+      });
+      if(response.statusCode == 200) {
+        return true;
+      }
+      manageHttpResponse(response: response, context: context, onSuccess: () {});
+      if(response.statusCode == 200) {
+        return true;
+      }else {
+        return false;
+      }
+
+    }catch(e) {
+      return false;
+    }
+  }
+  Future<bool> updatedMessageReactionByMessage({ required BuildContext context, required String messageId}) async {
+    try {
+      final response = await http.put(Uri.parse('$uri/api/messagereactions/message/$messageId'), headers:  {
+        'Context-Type': 'application/json; charset=UTF-8',
+      });
+      if(response.statusCode == 200) {
+        return true;
+      }
+      manageHttpResponse(response: response, context: context, onSuccess: () {});
+      if(response.statusCode == 200) {
+        return true;
+      }else {
+        return false;
+      }
+
+    }catch(e) {
+      return false;
+    }
+  }
+  Future<bool> updatedMessageReactionByUser({ required BuildContext context, required String messageId}) async {
+    try {
+      final response = await http.put(Uri.parse('$uri/api/messagereactions/message/$messageId/user'), headers:  {
+        'Context-Type': 'application/json; charset=UTF-8',
+      });
+      if(response.statusCode == 200) {
+        return true;
+      }
+      manageHttpResponse(response: response, context: context, onSuccess: () {});
+      if(response.statusCode == 200) {
+        return true;
+      }else {
+        return false;
+      }
+
+    }catch(e) {
+      return false;
+    }
+  }
+  Future<String> getMessageReactionCount({ required BuildContext context, required String messageId, required String reaction}) async {
+    try {
+      final reponse = await http.get(Uri.parse('$uri/api/messagereactions/message/$messageId/reaction/$reaction/count'), 
+      headers: {
+        'Context-Type': 'application/json; charset=UTF-8',
+      });
+      if(reponse.statusCode == 200) {
+        return json.decode(reponse.body)['count'].toString();
+      }
+      manageHttpResponse(response: reponse, context: context, onSuccess: () {});
+      if(reponse.statusCode == 200) {
+        return json.decode(reponse.body)['count'].toString();
+      }else {
+        return '0';
+      }
+    }catch(e) {
+      return '0';
+    }
+  }
+  Future<bool> checkUserMessageReaction({ required BuildContext context, required String messageId, required String reaction}) async {
+    try {
+      final response = await http.get(Uri.parse('$uri/api/messagereactions/message/$messageId/reaction/$reaction/user'), 
+      headers: {
+        'Context-Type': 'application/json; charset=UTF-8',
+      });
+      if(response.statusCode == 200) {
+        return json.decode(response.body)['hasReacted'] as bool;
+      }
+      manageHttpResponse(response: response, context: context, onSuccess: () {});
+      if(response.statusCode == 200) {
+        return json.decode(response.body)['hasReacted'] as bool;
+      }
+      return false;
+
+    }catch(e) {
+      return false;
+    }
+  }
+  Future<List<String>> getMessageReactionUsers({ required BuildContext context, required String messageId, required String reaction}) async {
+    try {
+      final response = await http.get(Uri.parse('$uri/api/messagereactions/message/$messageId/reaction/$reaction/users'), 
+      headers: {
+        'Context-Type': 'application/json; charset=UTF-8',
+      });
+      if(response.statusCode == 200) {
+        final List data = json.decode(response.body);
+        return data.map((e) => e['username'] as String).toList();
+      }
+      manageHttpResponse(response: response, context: context, onSuccess: () {});
+      if(response.statusCode == 200) {
+        final List data = json.decode(response.body);
+        return data.map((e) => e['username'] as String).toList();
+      }
+      return [];
+
+    }catch(e) {
+      return [];
+    }
+  }
 }
