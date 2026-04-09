@@ -112,6 +112,5 @@ class BlockController {
     }catch(e) {
       return [];
     }
-  }
-  
+  }  
 }

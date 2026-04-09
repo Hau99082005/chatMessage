@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const PORT = 3000;
+const PORT = 5000;
 const app = express();
 const dbConnect = require('./lib/dbconnect');
 const userRouter = require('./router/userRouter');
